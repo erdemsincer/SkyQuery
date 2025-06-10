@@ -1,0 +1,6 @@
+@SkyQuery.Ai.API_HostAddress = http://localhost:5118
+
+GET {{SkyQuery.Ai.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
