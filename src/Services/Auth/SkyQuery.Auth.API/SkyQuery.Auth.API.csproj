@@ -7,11 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.16" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
+    <ProjectReference Include="..\SkyQuery.Auth.Application\SkyQuery.Auth.Application.csproj" />
+    <ProjectReference Include="..\SkyQuery.Auth.Contracts\SkyQuery.Auth.Contracts.csproj" />
+    <ProjectReference Include="..\SkyQuery.Auth.Infrastructure\SkyQuery.Auth.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
