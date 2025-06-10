@@ -1,17 +1,20 @@
-using FluentValidation.AspNetCore;
+﻿using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using SkyQuery.Auth.Application;
 using SkyQuery.Auth.Infrastructure.Extensions;
+using SkyQuery.Auth.Infrastructure.Persistence;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// DI
+// Connection log (opsiyonel)
+Console.WriteLine("🔍 Resolved AuthDb => " + builder.Configuration["ConnectionStrings:AuthDb"]);
+
 builder.Services.AddApplication(); // MediatR + Validators
 builder.Services.AddInfrastructure(builder.Configuration); // DB + JWT
 
-// Auth
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -43,5 +46,36 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+// Auto-migrate
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<AuthDbContext>();
+
+    var retries = 0;
+    var maxRetries = 10;
+    var delay = TimeSpan.FromSeconds(3);
+
+    while (true)
+    {
+        try
+        {
+            dbContext.Database.Migrate();
+            Console.WriteLine("✅ Database migration completed.");
+            break;
+        }
+        catch (Exception ex)
+        {
+            retries++;
+            Console.WriteLine($"❌ Migration failed (attempt {retries}): {ex.Message}");
+
+            if (retries >= maxRetries)
+                throw;
+
+            Thread.Sleep(delay);
+        }
+    }
+}
+
 
 app.Run();
