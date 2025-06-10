@@ -2,9 +2,20 @@
 
 public class User
 {
-    public Guid Id { get; set; } = Guid.NewGuid();
-    public string Email { get; set; } = default!;
-    public string PasswordHash { get; set; } = default!;
-    public string Role { get; set; } = "User";
-    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    public Guid Id { get; private set; }
+    public string Email { get; private set; }
+    public string PasswordHash { get; private set; }
+    public string Role { get; private set; }
+    public DateTime CreatedAt { get; private set; }
+
+    private User() { } // EF için
+
+    public User(string email, string passwordHash, string role = "User")
+    {
+        Id = Guid.NewGuid();
+        Email = email;
+        PasswordHash = passwordHash;
+        Role = role;
+        CreatedAt = DateTime.UtcNow;
+    }
 }
