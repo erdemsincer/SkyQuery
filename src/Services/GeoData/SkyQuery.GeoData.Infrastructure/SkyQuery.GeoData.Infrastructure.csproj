@@ -6,4 +6,14 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="9.0.6" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SkyQuery.GeoData.Application\SkyQuery.GeoData.Application.csproj" />
+    <ProjectReference Include="..\SkyQuery.GeoData.Domain\SkyQuery.GeoData.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
