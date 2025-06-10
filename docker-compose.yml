@@ -1,4 +1,4 @@
-version: '3.8'
+﻿version: '3.8'
 
 services:
   # PostgreSQL for Auth
@@ -30,6 +30,22 @@ services:
       - postgres_location_data:/var/lib/postgresql/data
     ports:
       - "5433:5432"
+    networks:
+      - skyquery-net
+
+  # PostgreSQL for GeoData
+  postgres-geodata:
+    image: postgres:16
+    container_name: postgres-geodata
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: SkyQuery.GeoDataDb
+    volumes:
+      - postgres_geodata_data:/var/lib/postgresql/data
+    ports:
+      - "5434:5432"
     networks:
       - skyquery-net
 
@@ -65,9 +81,26 @@ services:
     networks:
       - skyquery-net
 
+  # GeoData API ✅ Yeni eklendi
+  skyquery-geodata-api:
+    build:
+      context: .
+      dockerfile: src/Services/GeoData/SkyQuery.GeoData.API/Dockerfile
+    container_name: skyquery-geodata-api
+    depends_on:
+      - postgres-geodata
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ConnectionStrings__DefaultConnection: "Host=postgres-geodata;Port=5432;Database=SkyQuery.GeoDataDb;Username=postgres;Password=postgres"
+    ports:
+      - "5002:8080"
+    networks:
+      - skyquery-net
+
 volumes:
   postgres_auth_data:
   postgres_location_data:
+  postgres_geodata_data:
 
 networks:
   skyquery-net:
