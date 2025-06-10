@@ -1,0 +1,38 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35327.3
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{F89FA86C-5F2F-4D88-8D24-5A1C7B88572D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{EE93AFC5-407A-4AC3-B12E-710C198DDCA0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{5D6CE5EF-0253-4918-9FF1-AD64E047B0F0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Auth", "Auth", "{59584CFB-B9ED-4447-B046-2C69FB89E425}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkyQuery.Auth.API", "src\Services\Auth\SkyQuery.Auth.API\SkyQuery.Auth.API.csproj", "{03D6C29B-1E78-4D48-91BE-1D93AD371B57}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{03D6C29B-1E78-4D48-91BE-1D93AD371B57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03D6C29B-1E78-4D48-91BE-1D93AD371B57}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03D6C29B-1E78-4D48-91BE-1D93AD371B57}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03D6C29B-1E78-4D48-91BE-1D93AD371B57}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{5D6CE5EF-0253-4918-9FF1-AD64E047B0F0} = {F89FA86C-5F2F-4D88-8D24-5A1C7B88572D}
+		{59584CFB-B9ED-4447-B046-2C69FB89E425} = {5D6CE5EF-0253-4918-9FF1-AD64E047B0F0}
+		{03D6C29B-1E78-4D48-91BE-1D93AD371B57} = {59584CFB-B9ED-4447-B046-2C69FB89E425}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A702EF4B-108E-4421-8DC5-E78FA0148CCD}
+	EndGlobalSection
+EndGlobal
