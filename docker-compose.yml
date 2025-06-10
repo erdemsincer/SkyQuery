@@ -1,0 +1,74 @@
+version: '3.8'
+
+services:
+  # PostgreSQL for Auth
+  postgres-auth:
+    image: postgres:16
+    container_name: postgres-auth
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: SkyQuery.AuthDb
+    volumes:
+      - postgres_auth_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - skyquery-net
+
+  # PostgreSQL for Location
+  postgres-location:
+    image: postgres:16
+    container_name: postgres-location
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: SkyQuery.LocationDb
+    volumes:
+      - postgres_location_data:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+    networks:
+      - skyquery-net
+
+  # Auth API
+  skyquery-auth-api:
+    build:
+      context: .
+      dockerfile: src/Services/Auth/SkyQuery.Auth.API/Dockerfile
+    container_name: skyquery-auth-api
+    depends_on:
+      - postgres-auth
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ConnectionStrings__AuthDb: "Host=postgres-auth;Port=5432;Database=SkyQuery.AuthDb;Username=postgres;Password=postgres"
+    ports:
+      - "5000:8080"
+    networks:
+      - skyquery-net
+
+  # Location API
+  skyquery-location-api:
+    build:
+      context: .
+      dockerfile: src/Services/Location/SkyQuery.Location.API/Dockerfile
+    container_name: skyquery-location-api
+    depends_on:
+      - postgres-location
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ConnectionStrings__DefaultConnection: "Host=postgres-location;Port=5432;Database=SkyQuery.LocationDb;Username=postgres;Password=postgres"
+    ports:
+      - "5001:8080"
+    networks:
+      - skyquery-net
+
+volumes:
+  postgres_auth_data:
+  postgres_location_data:
+
+networks:
+  skyquery-net:
+    driver: bridge
