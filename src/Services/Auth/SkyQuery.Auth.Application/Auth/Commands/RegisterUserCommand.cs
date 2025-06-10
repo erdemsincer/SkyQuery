@@ -1,8 +1,6 @@
 ﻿using MediatR;
+using SkyQuery.Auth.Contracts.Responses;
 
-namespace SkyQuery.Auth.Application.Auth.Commands
-{
-    // SkyQuery.Auth.Application/Auth/Commands/RegisterUserCommand.cs
-    public record RegisterUserCommand(string Email, string Password) : IRequest<Result<Guid>>;
+namespace SkyQuery.Auth.Application.Auth.Commands;
 
-}
+public record RegisterUserCommand(string Email, string Password) : IRequest<RegisterUserResponse>;
