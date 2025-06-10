@@ -20,4 +20,12 @@ public class AuthController : ControllerBase
         var result = await _mediator.Send(command);
         return Ok(result);
     }
+    [HttpPost("login")]
+    public async Task<ActionResult<LoginUserResponse>> Login(LoginUserRequest request)
+    {
+        var command = new LoginUserCommand(request.Email, request.Password);
+        var result = await _mediator.Send(command);
+        return Ok(result);
+    }
+
 }
